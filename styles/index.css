@@ -1,0 +1,49 @@
+* {
+  position: relative;
+  box-sizing: border-box;
+}
+
+
+html, body {
+  font-family: var(--font-family-reg);
+  /* background: #00f; */
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+h2 {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+footer {
+  font-family: var(--font-family-mono);
+  font-size: 10px;
+  text-align: right;
+}
+
+p {
+  max-width: 520px;
+}
+p + p {
+  margin-top: 0.5em;
+}
+
+a {
+  text-decoration: none;
+  color: currentColor;
+  border-bottom: solid 1px var(--color-gray);
+  padding-bottom: 2px;
+}
+a:hover {
+  border-color: currentColor;
+}
+
+.wrapper {
+  max-width: 1200px;
+  width: 100vw;
+  margin: 0 auto;
+  padding: 10px; 
+}

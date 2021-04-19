@@ -1,0 +1,24 @@
+:root {
+  /* Typography */
+  --font-family-reg: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
+  --font-family-mono: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
+
+
+  /* Colors */
+  --color-white: #FFF;
+  --color-black: #000;
+  --color-gray: #ccc;
+  --color-highlight: #00f;
+
+  /* Sizes */
+  --grid-unit: 10px;
+  --max-width: 1200px;
+
+}
+
+/*@media (prefers-color-scheme: dark) {
+  :root {
+    --color-white: #000;
+    --color-black: #FFF;
+  }
+}*/

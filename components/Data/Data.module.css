@@ -1,0 +1,44 @@
+
+.Data {
+  width: 100%;
+  margin: 2rem auto;
+}
+
+
+.graphHeader {
+  padding-bottom: 2em;
+}
+
+.dataSelector select {
+  appearance: none;       /* Remove default arrow */
+  border: none;
+  background: none;
+  margin-left: 0.3em;
+  border-bottom: solid 1px #ccc;
+  padding-bottom: 2px;
+  min-width: 200px;
+
+  cursor: pointer;
+  font-family: var(--font-family-reg);
+  font-size: 1rem;
+}
+.dataSelector select:hover {
+  border-color: var(--color-black);
+}
+
+.logChart {
+  height: 500px;
+  user-select: none;
+
+  font-family: var(--font-family-mono);
+  font-size: 10px;
+}
+
+.logChart * {
+  font-style: normal !important;
+}
+
+.logChart path {
+  mix-blend-mode: multiply;
+}
+
