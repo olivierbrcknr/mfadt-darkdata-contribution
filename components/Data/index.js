@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import Link from 'next/link'
 
-import {ResponsiveContainer,ComposedChart,LineChart,XAxis,YAxis,Label,CartesianGrid,Line,Tooltip,Legend} from 'recharts'
+import {ResponsiveContainer,ComposedChart,LineChart,XAxis,YAxis,Label,CartesianGrid,Line,Tooltip,Legend,ReferenceLine} from 'recharts'
 
 import styles from './Data.module.css';
 
@@ -17,9 +17,31 @@ import motionLog from './logs/motion.json'
 import orientationLog from './logs/orientation.json'
 import pedometerLog from './logs/pedometer.json'
 
+// const animationUpdateTime = 1; // in sec
+// const maxTimeInSec = 379; // from iPhoneMovement.json
+
 const Data = (props) => {
 
   const [graphSelection,setGraphSelection] = useState('accelerometer')
+  // const [frame,setFrame] = useState(0)
+
+  // const updateFrame = () => {
+
+  //   console.log("updateFrame")
+
+  //   let dummyFrame = frame
+  //   dummyFrame += animationUpdateTime / 60 // add one second
+
+  //   if( dummyFrame > maxTimeInSec ){
+  //     dummyFrame = 0
+  //   }
+
+  //   setFrame( dummyFrame )
+  // }
+
+  // useEffect( ()=>{
+  //   setTimeout( updateFrame, animationUpdateTime * 1000 )
+  // }, [frame] )
 
   let classes = [styles.Data];
   classes.push(props.className);
@@ -32,13 +54,16 @@ const Data = (props) => {
 
   let displayGraph = null;
 
+  const elTimeInMin = props.elTime / 60;
+
   const basicSetup = [
     <XAxis key="xAxis" dataKey="ts" type="number" name="Minutes" tickCount={30} domain={['dataMin', 'dataMax']} interval="preserveStart" >
       <Label value="Minutes" offset={0} position="insideBottomRight" />  
     </XAxis>,
     <CartesianGrid key="Grid" stroke="#eee"/>,
     <Tooltip key="Tooltip" />,
-    <Legend key="Legend" iconType={"rect"} verticalAlign="top" align="right" />
+    <Legend key="Legend" iconType={"rect"} verticalAlign="top" align="right" />,
+    <ReferenceLine key="Animation" stroke="red" strokeDasharray="3 3" x={elTimeInMin} />
   ];
 
   const yAxisPosition = "insideLeft";

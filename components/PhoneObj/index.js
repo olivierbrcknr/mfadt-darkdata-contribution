@@ -9,8 +9,7 @@ import { OBJLoader } from "three-obj-mtl-loader";
 
 import styles from './PhoneObj.module.css';
 
-// import matCapTextureFile from './textures/4.png'
-// import iphoneModel from './object/iPhone12mini.obj'
+import movementLog from './iPhoneMovement.json'
 
 
 const PhoneObj = (props) => {
@@ -25,9 +24,10 @@ const PhoneObj = (props) => {
     height: 400
   }
 
+  const maxMove = movementLog.length
+
   // component did mount
   useEffect(()=>{
-
 
     const scene = new THREE.Scene();
 
@@ -55,7 +55,7 @@ const PhoneObj = (props) => {
     // scene.add( cube );
 
     let iphone = null;
-    // console.log(iphoneModel)
+
     objLoader.load(
       'objects/iPhone12mini.obj',
       ( object ) => {
@@ -74,12 +74,64 @@ const PhoneObj = (props) => {
       },
     );
 
+    const clock = new THREE.Clock()
+    let previousTime = 0
+    const fps = 30
+    let frame = 0
+
+    let prevLogIndex = 0
+    let prevLog = {
+      w: 0,
+      x: 0,
+      y: 0,
+      z: 0
+    }
+
+    const getAnimation = (elapsedTime) => {
+      
+      let foundNew = false
+
+      if( movementLog && movementLog.length > 0 ){
+
+        for( let i = prevLogIndex; i <= movementLog.length; i++ ){
+
+          if( movementLog[i] && movementLog[i].ts >= elapsedTime && !foundNew ){
+            foundNew = true
+            prevLogIndex = i
+            prevLog = {
+              w: movementLog[i].quatW,
+              x: movementLog[i].quatX,
+              y: movementLog[i].quatY,
+              z: movementLog[i].quatZ
+            }
+            props.updateTime( elapsedTime )
+          }
+        }
+      }
+    }
+
     const tick = () => {
 
+      const elapsedTime = clock.getElapsedTime()
+      const deltaTime = elapsedTime - previousTime
+      previousTime = elapsedTime
+
       if( iphone ){
+
+        getAnimation( elapsedTime )
+        iphone.quaternion.copy( prevLog )
+
         // cube.rotation.x += 0.01;
-        iphone.rotation.z += 0.01;
+        // iphone.quaternion.w = movementLog[frame].quatW;
+        // iphone.quaternion.x = movementLog[frame].quatX;
+        // iphone.quaternion.y = movementLog[frame].quatY ;
+        // iphone.quaternion.z = movementLog[frame].quatZ;
         renderer.render( scene, camera );
+
+        // frame++
+        // if( frame >= maxMove ){
+        //   frame = 0
+        // }
       }
 
       requestAnimationFrame( tick );
