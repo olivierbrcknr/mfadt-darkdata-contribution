@@ -38,6 +38,9 @@ const Home = () => {
             <p>
               This data has been trimmed-down and portioned into separate files to make it displayable in a browser.
             </p>
+            <p>
+              The iPhone model displays the movement, shown in the graph below. It shows a portion of me walking for a bit, waiting at a traffic light. Eventually, one can see how I pick it out of my pocket and holding it in my hand until I look something up.
+            </p>
 
           </div>
 

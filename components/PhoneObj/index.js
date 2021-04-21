@@ -2,10 +2,6 @@ import React, { useEffect, useState, useRef } from 'react'
 
 import * as THREE from 'three'
 import { OBJLoader } from "three-obj-mtl-loader";
-// import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader'
-
-// import OBJLoader from "three-obj-loader";
-// import * as dat from 'dat.gui'
 
 import styles from './PhoneObj.module.css';
 
@@ -51,10 +47,6 @@ const PhoneObj = (props) => {
     const material = new THREE.MeshMatcapMaterial();
     material.matcap = matCapTexture
 
-    // const geometry = new THREE.BoxGeometry( 2.82, 5.78, 0.29 );
-    // const cube = new THREE.Mesh( geometry, material );
-    // scene.add( cube );
-
     let iphone = null;
 
     objLoader.load(
@@ -89,6 +81,7 @@ const PhoneObj = (props) => {
     }
 
     let animCount = 0
+    const startTime = movementLog[0].ts
     const maxTime = movementLog[movementLog.length-1].ts
 
     const getAnimation = (elapsedTime) => {
@@ -97,22 +90,24 @@ const PhoneObj = (props) => {
 
       if( elapsedTime > maxTime ){
         animCount++
-      }
+        prevLogIndex = 0
+      }else{
+        // only loop if not over time
+        if( movementLog && movementLog.length > 0 ){
 
-      if( movementLog && movementLog.length > 0 ){
+          for( let i = prevLogIndex; i <= movementLog.length; i++ ){
 
-        for( let i = prevLogIndex; i <= movementLog.length; i++ ){
-
-          if( movementLog[i] && movementLog[i].ts >= elapsedTime && !foundNew ){
-            foundNew = true
-            prevLogIndex = i
-            prevLog = {
-              w: movementLog[i].quatW,
-              x: movementLog[i].quatX,
-              y: movementLog[i].quatY,
-              z: movementLog[i].quatZ
+            if( movementLog[i] && movementLog[i].ts >= elapsedTime && !foundNew ){
+              foundNew = true
+              prevLogIndex = i
+              prevLog = {
+                w: movementLog[i].quatW,
+                x: movementLog[i].quatX,
+                y: movementLog[i].quatY,
+                z: movementLog[i].quatZ
+              }
+              props.updateTime( elapsedTime )
             }
-            props.updateTime( elapsedTime )
           }
         }
       }
@@ -143,24 +138,12 @@ const PhoneObj = (props) => {
     const tick = () => {
 
       const elapsedTime = clock.getElapsedTime()
-      const calcElapsedTime = elapsedTime - ( animCount * maxTime * 60000 )
+      const calcElapsedTime = elapsedTime + startTime - ( animCount * (maxTime - startTime) ) 
 
       if( iphone ){
-
         getAnimation( calcElapsedTime )
         iphone.quaternion.copy( prevLog )
-
-        // cube.rotation.x += 0.01;
-        // iphone.quaternion.w = movementLog[frame].quatW;
-        // iphone.quaternion.x = movementLog[frame].quatX;
-        // iphone.quaternion.y = movementLog[frame].quatY ;
-        // iphone.quaternion.z = movementLog[frame].quatZ;
         renderer.render( scene, camera );
-
-        // frame++
-        // if( frame >= maxMove ){
-        //   frame = 0
-        // }
       }
 
       setTimeout( ()=>{

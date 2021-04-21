@@ -17,8 +17,8 @@ print(bcolors.OKGREEN + 'Start JSON convert' + bcolors.ENDC)
 
 entriesPerSecond = 30 # 30 Hz
 wantedEntriesPerSecond = 30
-portionToExport = 10 # in %
-startFromSec = 0
+portionToExport = 3 # in min
+startFromMin = 23
 
 getEPS = int( entriesPerSecond / wantedEntriesPerSecond )
 
@@ -26,11 +26,10 @@ f = open('log.json',)
 data = json.load(f)
 
 totalLength = len(data)
-exportCount = totalLength*(portionToExport/100)
-startCount = startFromSec 
+exportCount = totalLength*(portionToExport/60)
 
 print(bcolors.OKBLUE+"Total entry count: "+str(totalLength))
-print("Portion to export: "+str( portionToExport )+"%")
+print("Portion to export: "+str( portionToExport )+"min")
 print("Entry count to export: "+str( exportCount )+bcolors.ENDC)
 
 # CREATE JSON ARRAYS ---------------------------------------------------------
@@ -38,6 +37,8 @@ print("Entry count to export: "+str( exportCount )+bcolors.ENDC)
 accArr = []
 
 initialTS = 0
+
+count = 0
 
 # PARSE THOUGH JSON ---------------------------------------------------------
 for i, entry in enumerate(data):
@@ -61,10 +62,12 @@ for i, entry in enumerate(data):
   # convert timestamp  from usage
   ts = (ts - initialTS)
 
-  print(ts)
+  # print(ts)
 
   # only get every 30th value
-  if i%getEPS == 0 and i < exportCount and ts >= startFromSec :
+  if i%getEPS == 0 and count < exportCount and ts >= startFromMin*60 :
+
+    count = count + 1
 
     # accelerometer
     # accTS = float( entry["accelerometerTimestamp_sinceReboot"] )-accInitTS
