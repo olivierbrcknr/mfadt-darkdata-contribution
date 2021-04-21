@@ -16,9 +16,11 @@
 
 }
 
-/*@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
   :root {
-    --color-white: #000;
+    --color-white: #111;
     --color-black: #FFF;
+    --color-gray: #ccc;
+    --color-highlight: #00f;
   }
-}*/
+}

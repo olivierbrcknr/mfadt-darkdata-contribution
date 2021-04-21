@@ -21,6 +21,7 @@
   cursor: pointer;
   font-family: var(--font-family-reg);
   font-size: 1rem;
+  color: var(--color-black);
 }
 .dataSelector select:hover {
   border-color: var(--color-black);
@@ -42,3 +43,11 @@
   mix-blend-mode: multiply;
 }
 
+@media (prefers-color-scheme: dark) {
+  .logChart path {
+    mix-blend-mode: screen;
+  }
+  .logChart line {
+    stroke: #444 !important;
+  }
+}

@@ -19,12 +19,12 @@ const PhoneObj = (props) => {
   let classes = [styles.PhoneObj];
   classes.push(props.className);
 
+  const maxMove = movementLog.length
+
   const sizes = {
-    width: 800,
+    width: 600,
     height: 400
   }
-
-  const maxMove = movementLog.length
 
   // component did mount
   useEffect(()=>{
@@ -39,6 +39,7 @@ const PhoneObj = (props) => {
       antialias: true,
       alpha: true,
     });
+
     renderer.setSize( sizes.width, sizes.height );
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
@@ -87,9 +88,16 @@ const PhoneObj = (props) => {
       z: 0
     }
 
+    let animCount = 0
+    const maxTime = movementLog[movementLog.length-1].ts
+
     const getAnimation = (elapsedTime) => {
       
       let foundNew = false
+
+      if( elapsedTime > maxTime ){
+        animCount++
+      }
 
       if( movementLog && movementLog.length > 0 ){
 
@@ -110,15 +118,36 @@ const PhoneObj = (props) => {
       }
     }
 
+    const updateSizes = () => {
+
+      // Update sizes
+      sizes.width = window.innerWidth > 600 ? 600 : window.innerWidth - 20
+      sizes.height = window.innerWidth > 600 ? 400 : 300
+
+      // Update camera
+      camera.aspect = sizes.width / sizes.height
+      camera.updateProjectionMatrix()
+
+      // Update renderer
+      renderer.setSize(sizes.width, sizes.height)
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+    }
+
+    updateSizes()
+
+    window.addEventListener('resize', () => {
+      updateSizes()
+    })
+
     const tick = () => {
 
       const elapsedTime = clock.getElapsedTime()
-      const deltaTime = elapsedTime - previousTime
-      previousTime = elapsedTime
+      const calcElapsedTime = elapsedTime - ( animCount * maxTime * 60000 )
 
       if( iphone ){
 
-        getAnimation( elapsedTime )
+        getAnimation( calcElapsedTime )
         iphone.quaternion.copy( prevLog )
 
         // cube.rotation.x += 0.01;
@@ -134,10 +163,12 @@ const PhoneObj = (props) => {
         // }
       }
 
-      requestAnimationFrame( tick );
-    };
+      setTimeout( ()=>{
+        requestAnimationFrame( tick );
+      }, 1000 / fps)
+    }
 
-    tick();
+    tick()
 
   }, [])
 

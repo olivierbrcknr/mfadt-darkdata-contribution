@@ -70,6 +70,8 @@ for i, entry in enumerate(data):
   # convert timestamp into minutes from usage
   ts = (ts - initialTS) / 60 
 
+  ts = int( ts * 100 ) / 100
+
   # only get every 30th value
   if i%getEPS == 0 and i < exportCount :
 
@@ -147,13 +149,13 @@ for i, entry in enumerate(data):
       # "lat":float( entry["locationLatitude"] ),
       # "lng":float( entry["locationLongitude"] ),
       "altitude":float( entry["locationAltitude"] ),
-      "floor":float( entry["locationFloor"] ),
-      "headX":float( entry["locationHeadingX"] ),
-      "headY":float( entry["locationHeadingY"] ),
-      "headZ":float( entry["locationHeadingZ"] ),
+      # "floor":float( entry["locationFloor"] ),
+      # "headX":float( entry["locationHeadingX"] ),
+      # "headY":float( entry["locationHeadingY"] ),
+      # "headZ":float( entry["locationHeadingZ"] ),
       "speed":float( entry["locationSpeed"] ),
+      "course":float( entry["locationCourse"] ),
 
-      # "locationCourse" : "233.150787",
       # "locationHeadingTimestamp_since1970" : "1617964272.094853",
       # "locationHorizontalAccuracy" : "18.383077",
       # "locationTimestamp_since1970" : "1617964271.999422",

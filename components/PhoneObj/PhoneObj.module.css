@@ -1,6 +1,5 @@
 .PhoneObj {
-  max-width: 800px;
-  width: 1000%;
-  margin: 0 auto;
+  max-width: 600px;
+  width: 100%;
   display: block;
 }

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import Link from 'next/link'
 
-import {ResponsiveContainer,ComposedChart,LineChart,XAxis,YAxis,Label,CartesianGrid,Line,Tooltip,Legend,ReferenceLine} from 'recharts'
+import {ScatterChart,ResponsiveContainer,ComposedChart,LineChart,XAxis,YAxis,Label,CartesianGrid,Line,Tooltip,Legend,ReferenceLine} from 'recharts'
 
 import styles from './Data.module.css';
 
@@ -61,9 +61,9 @@ const Data = (props) => {
       <Label value="Minutes" offset={0} position="insideBottomRight" />  
     </XAxis>,
     <CartesianGrid key="Grid" stroke="#eee"/>,
-    <Tooltip key="Tooltip" />,
-    <Legend key="Legend" iconType={"rect"} verticalAlign="top" align="right" />,
-    <ReferenceLine key="Animation" stroke="red" strokeDasharray="3 3" x={elTimeInMin} />
+    <Tooltip key="Tooltip" contentStyle={{fontSize: 12+'px'}} />,
+    <Legend key="Legend" iconType={"rect"} margin={{bottom:20}} verticalAlign="top" align="right"  />,
+    <ReferenceLine key="Animation" alwaysShow stroke="red" strokeDasharray="3 3" x={elTimeInMin} />
   ];
 
   const yAxisPosition = "insideLeft";
@@ -97,7 +97,7 @@ const Data = (props) => {
             {basicSetup}
 
             <YAxis type="number" >
-              <Label value="kPa" offset={0} position={yAxisPosition} angle="-90" />  
+              {/* <Label value="kPa" offset={0} position={yAxisPosition} angle="-90" />  */}
             </YAxis>
 
             <Line type="monotone" isAnimationActive={false} dataKey="confidence" stroke={colors.blue} dot={false} />
@@ -130,9 +130,11 @@ const Data = (props) => {
               
               {basicSetup}
 
-              <YAxis type="number" domain={[-160,0]}>
+              <YAxis type="number" domain={[-60,0]}>
                 <Label value="db" offset={0} position={yAxisPosition} angle="-90" />  
               </YAxis>
+
+              <ReferenceLine label="My Average Room level" strokeDasharray="1 3" stroke={colors.red} y={-30} />
 
               <Line type="monotone" isAnimationActive={false} dataKey="peakP" name="db Peak" stroke={colors.green} dot={false} />
               <Line type="monotone" isAnimationActive={false} dataKey="avgP" name="Average Power" stroke={colors.blue} dot={false} />
@@ -163,11 +165,14 @@ const Data = (props) => {
               
               {basicSetup}
 
-              <YAxis type="number" domain={[0,1]}>
-                <Label value="Battery Charge" offset={0} position={yAxisPosition} angle="-90" />  
+              <YAxis type="number" domain={[-1,600]} ticks={[0,200,400,600]}>
+                <Label value="Speed [m/s] / Altitude [m] / Course [°]" offset={0} position={yAxisPosition} angle="-90" />
               </YAxis>
 
-              <Line type="monotone" isAnimationActive={false} dataKey="speed" stroke={colors.blue} dot={false} />
+              <Line type="monotone" isAnimationActive={false} name="Speed [m/s]" dataKey="speed" stroke={colors.blue} dot={false} />
+              <Line type="monotone" isAnimationActive={false} name="Altitude [m]" dataKey="altitude" stroke={colors.red} dot={false} />
+              <Line type="monotone" isAnimationActive={false} name="Course [°]" dataKey="course" stroke={colors.green} dot={false} />
+
             </LineChart>
           </ResponsiveContainer>
         break;
