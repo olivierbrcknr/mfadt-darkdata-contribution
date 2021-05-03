@@ -33,13 +33,13 @@ const Home = () => {
             </h2>
 
             <p>
-              This is recorded sensor data from an iPhone 12 mini using the <a href="https://apps.apple.com/us/app/sensorlog/id388014573">SensorLo‪g‬</a> app. It represents approximiately an 30 minutes walk. 
+              This is recorded sensor data from an iPhone 12 mini using the <a href="https://apps.apple.com/us/app/sensorlog/id388014573">SensorLo‪g‬</a> app. It represents approximiately a 30 minutes walk. 
             </p>
             <p>
               This data has been trimmed-down and portioned into separate files to make it displayable in a browser.
             </p>
             <p>
-              The iPhone model displays the movement, shown in the graph below. It shows a portion of me walking for a bit, waiting at a traffic light. Eventually, one can see how I pick it out of my pocket and holding it in my hand until I look something up.
+              The iPhone model displays the movement, shown in the graph below. It shows me walking for a bit then waiting at a traffic light. Eventually, one can see how I pull it out of my pocket and holding it in my hand until I look something up.
             </p>
 
           </div>

@@ -42,7 +42,7 @@ const PhoneObj = (props) => {
     const textureLoader = new THREE.TextureLoader()
     const objLoader = new OBJLoader();
 
-    const matCapTexture = textureLoader.load('matcap/blue.jpg')
+    const matCapTexture = textureLoader.load('matcap/red.jpg')
 
     const material = new THREE.MeshMatcapMaterial();
     material.matcap = matCapTexture

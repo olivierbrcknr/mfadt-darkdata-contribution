@@ -7,7 +7,7 @@ const Head = props => {
   return (
     <NextHead>
 
-      <link rel="shortcut icon" href="/favicon.ico" />
+      <link rel="shortcut icon" href="/favicon_red.ico" />
       <meta charSet="UTF-8" />
       <title>{props.title}</title>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
